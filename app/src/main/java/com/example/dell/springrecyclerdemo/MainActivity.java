@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Toast;
 
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
@@ -13,7 +15,7 @@ import com.liaoinstan.springview.widget.SpringView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements MyAdapter.OnItemClickListener{
 
     private SpringView springView;
     private RecyclerView recyclerView;
@@ -36,6 +38,7 @@ public class MainActivity extends Activity {
         if (list != null && list.size() > 0) {
             adapter = new MyAdapter(this, list);
             recyclerView.setAdapter(adapter);
+            adapter.setOnItemClickListener(this);
         }
 
         springView.setType(SpringView.Type.FOLLOW);
@@ -71,8 +74,6 @@ public class MainActivity extends Activity {
         });
         springView.setHeader(new DefaultHeader(this));
         springView.setFooter(new DefaultFooter(this));
-
-
     }
 
     private void initData(int number) {
@@ -83,4 +84,13 @@ public class MainActivity extends Activity {
         }
     }
 
+    @Override
+    public void onItemClickListener(int position, View view) {
+        Toast.makeText(this, "" + list.get(position).getName(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemLongClickListener(int position, View view) {
+
+    }
 }
